@@ -18,6 +18,11 @@ type Mutation {
   updateComment(id: ID!, data: UpdateCommentInput!): Comment!
 }
 
+type Subscription {
+  comment(postId: ID!): Comment!
+  post: PostSubscriptionPayload!
+}
+
 # Note: the Input type can ONLY have scalar types, no customized types
 input CreateUserInput {
   name: String!
@@ -77,4 +82,9 @@ type Comment {
   text: String!
   author: User!
   post: Post!
+}
+
+type PostSubscriptionPayload  {
+  mutation: String!
+  data: Post!
 }
