@@ -1,28 +1,13 @@
 const Query = {
-  users(parent, args, { db }, info) {
-    if (!args.query) {
-      return db.users
-    }
-    
-    return db.users.filter((user) => {
-      return user.name.toLowerCase().includes(args.query.toLowerCase())
-    })
+  users(parent, args, { prisma }, info) {
+    // with info, the request will be independent of the sources that do the requests
+    return prisma.query.users(null, info)
   },
-  posts(parent, args, {db}, info) {
-    if (!args.query) {
-      return db.posts
-    }
-
-    return db.posts.filter((post) => {
-      return (post.title.toLowerCase().includes(args.query.toLowerCase()) || post.body.toLowerCase().includes(args.query.toLowerCase()))
-    })
+  posts(parent, args, { prisma }, info) {
+    return prisma.query.posts(null, info)
   },
-  comments(parent, args, { db }, info) {
-    if (!args.query) {
-      return db.comments
-    }
-
-    return db.comments.filter((comment) => comment.text.toLocaleLowerCase().includes(args.query.toLowerCase()))
+  comments(parent, args, { prisma }, info) {
+    return prisma.query.comments(null, info)
   }
 }
 
