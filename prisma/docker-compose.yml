@@ -15,7 +15,6 @@ services:
             connector: postgres
             host: ec2-18-232-232-96.compute-1.amazonaws.com
             database: d25t7th3q20po0
-            schema: schema.graphql
             user: pjdymakmppzduk
             password: 206744bd9f610b922a2d8cb973ea4750d47e192288425017cb3e159a2c654de2
             ssl: true
