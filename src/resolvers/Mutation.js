@@ -5,11 +5,6 @@ const Mutation = {
   async createUser(parent, args, { prisma }, info) {
     return prisma.mutation.createUser({ data: args.data }, info)
   },
-  async updateUser(parent, args, { prisma }, info)  {
-    const { id, data } = args
-
-    return prisma.mutation.updateUser({ where: { id }, data }, info)
-  },
   async deleteUser(parent, args, { prisma }, info) {
     // leave verification check to prisma
     return prisma.mutation.deleteUser({ where: { id } }, info)
@@ -27,6 +22,11 @@ const Mutation = {
         }
       }
     }, info)
+  },
+  async updateUser(parent, args, { prisma }, info)  {
+    const { id, data } = args
+
+    return prisma.mutation.updateUser({ where: { id }, data }, info)
   },
   deletePost(parent, args, { prisma }, info) {
     return prisma.mutation.deletePost({ where: { id: args.id } }, info)
