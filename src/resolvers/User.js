@@ -1,11 +1,6 @@
-const User = {
-  posts(parent, args, { db }, info) {
-    return db.posts.filter((post) => post.author === parent.id)
-  },
-  comments(parent, args, { db }, info) {
-    return db.comments.filter((comment) => comment.author === parent.id)
-  }
-}
+// With Prisma, the relational field can be directly linked with info, 
+// no need to specify the relational field here
+const User = {}
 
 
 export { User as default }
