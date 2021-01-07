@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "get-schema": "get-graphql-schema $prisma_url > src/generated/prisma.graphql -h \"Authorization\"=\"bearer $auth_token\""
+    "get-schema": "source .env && get-graphql-schema $prisma_url > src/generated/prisma.graphql -h \"Authorization\"=\"bearer $prisma_token\""
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +14,7 @@
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "bcryptjs": "^2.4.3",
     "env-cmd": "^10.1.0",
     "graphql": "^0.13.2",
     "graphql-yoga": "^1.18.3",
