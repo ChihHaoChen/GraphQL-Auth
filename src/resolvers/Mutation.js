@@ -25,6 +25,24 @@ const Mutation = {
     // leave verification check to prisma
     return prisma.mutation.deleteUser({ where: { id } }, info)
   },
+  async signInUser(parent, args, { prisma })  {
+    const user = await prisma.query.user({ where: { email: args.data.email }})
+
+    if (!user)  {
+      throw new Error('User not found.')
+    }
+    
+    const isMatched = await bcrypt.compare(args.data.password, user.password)
+
+    if (!isMatched) {
+      throw new Error('Not correct password.')
+    } else {
+      return {
+        user,
+        token: jwt.sign({ userId: user.id }, 'TempSecret')
+      }
+    }
+  },
   createPost(parent, args, { prisma }, info) {
     return prisma.mutation.createPost({  
       data: {
