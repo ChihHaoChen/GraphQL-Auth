@@ -45,10 +45,10 @@ const Mutation = {
       }
     }
   },
-  createPost(parent, args, { prisma, request }, info) {
+  async createPost(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)
 
-    return prisma.mutation.createPost({  
+    return await prisma.mutation.createPost({  
       data: {
         title: args.data.title,
         body: args.data.body,
