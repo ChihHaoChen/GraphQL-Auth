@@ -94,9 +94,22 @@ const Mutation = {
         id: userId
       }
     })
-
+    
     if (!postExists)  {
       throw new Error('Unable to update the post')
+    }
+    
+    const isPostPublished =  await prisma.exists.Post({
+      id,
+      published: true
+    })
+
+    if (isPostPublished && data.published === false)  {
+      await prisma.mutation.deleteManyComments({
+        where: {
+          post: { id }
+        }
+      })
     }
 
     return prisma.mutation.updatePost({
@@ -107,6 +120,16 @@ const Mutation = {
   async createComment(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)
     const { text, post } = args.data
+
+    const postExists = await prisma.exists.Post({
+      id: post,
+      published: true
+    })
+
+    if (!postExists)  {
+      throw new Error('No corresponding post yet')
+    }
+
     return prisma.mutation.createComment({
       data: {
         text,
