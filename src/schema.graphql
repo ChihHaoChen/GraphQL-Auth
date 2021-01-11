@@ -23,6 +23,7 @@ type Mutation {
 type Subscription {
   comment(postId: ID!): CommentSubscriptionPayload!
   post: PostSubscriptionPayload!
+  myPost: PostSubscriptionPayload!
 }
 
 # Note: the Input type can ONLY have scalar types, no customized types
@@ -35,6 +36,7 @@ input CreateUserInput {
 input UpdateUserInput {
   name: String
   email: String
+  password: String
 }
 
 input SignInUserInput {
