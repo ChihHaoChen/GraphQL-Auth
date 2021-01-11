@@ -2,12 +2,13 @@ import getUserId from '../utils/getUserId'
 
 const Query = {
   users(parent, args, { prisma }, info) {
-    const opArgs = {}
+    const { first, skip, after, query } = args
+    const opArgs = { first, skip, after }
 
-    if (args.query) {
+    if (query) {
       opArgs.where = {
         OR: [
-          { name_contains: args.query }
+          { name_contains: query }
         ]
       }
     }
@@ -15,25 +16,37 @@ const Query = {
     return prisma.query.users(opArgs, info)
   },
   posts(parent, args, { prisma }, info) {
-    const opArgs = { where: {
-      published: true
-    }}
+    const { first, skip, after, query } = args
+
+    const opArgs = { 
+      first,
+      skip,
+      after,
+      where: {
+        published: true
+      }
+    }
 
     opArgs.where.OR = [
-      { title_contains: args.query },
-      { body_contains: args.query }
+      { title_contains: query },
+      { body_contains: query }
     ]
 
     return prisma.query.posts(opArgs, info)
   },
   myPosts(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)
-
-    const opArgs = { where: {
-      author: {
-        id: userId
+    const { first, skip, after } = args
+    const opArgs = {
+      first,
+      skip,
+      after, 
+      where: {
+        author: {
+          id: userId
+        }
       }
-    }}
+    }
 
     if (args.query) {
       opArgs.where.OR = [
@@ -46,7 +59,8 @@ const Query = {
 
   },
   comments(parent, args, { prisma }, info) {
-    const opArgs = {}
+    const { first, skip, after } = args
+    const opArgs = { first, skip, after }
 
     if (args.query) {
       opArgs.where = {
