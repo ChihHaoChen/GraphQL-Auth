@@ -6,11 +6,12 @@
   "scripts": {
     "start": "env-cmd -f config/prod.env node dist/index.js",
     "heroku-postbuild": "babel src --out-dir dist --copy-files",
-    // "dev": "env-cmd -f config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
+    "dev": "env-cmd -f config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
     "get-schema": "source .env && get-graphql-schema $prisma_url > src/generated/prisma.graphql -h \"Authorization\"=\"bearer $prisma_token\""
   },
   "author": "",
+  "heroku-run-build-script": true,
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -22,10 +23,11 @@
     "graphql": "^0.13.2",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.6",
     "prisma-binding": "^2.3.16"
   },
   "devDependencies": {
-    "dotenv": "^0.4.0"
+    "dotenv": "^0.4.0",
+    "heroku": "^7.47.7",
+    "nodemon": "^2.0.7"
   }
 }
